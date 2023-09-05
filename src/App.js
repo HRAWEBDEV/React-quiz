@@ -6,32 +6,12 @@ import Error from './components/Error';
 import StartScreen from './components/StartScreen';
 import Question from './components/Question';
 import { useEffect, useReducer } from 'react';
-
-const initialStore = {
- questions: [],
- status: 'ready',
-};
-
-const storeReducer = (state, { type, payload }) => {
- if (type === 'SET_DATA') {
-  return {
-   ...state,
-   questions: payload,
-  };
- }
- if (type === 'CHANGE_STATUS') {
-  return {
-   ...state,
-   status: payload,
-  };
- }
-
- return { ...state };
-};
+import { storeReducer, initialStore } from './reducer/storeReducer';
 
 const App = () => {
  const [store, dispatch] = useReducer(storeReducer, initialStore);
- const { status, questions } = store;
+ const { status, questions, index } = store;
+ const currentQuestion = questions[index];
 
  const getQusetions = async () => {
   dispatch({ type: 'CHANGE_STATUS', payload: 'loading' });
@@ -65,7 +45,7 @@ const App = () => {
     {status === 'ready' && (
      <StartScreen questionsCount={questions.length} onStart={handleStart} />
     )}
-    {status === 'start' && <Question />}
+    {status === 'start' && <Question currentQuestion={currentQuestion} />}
    </Main>
   </div>
  );
