@@ -6,14 +6,18 @@ import Error from './components/Error';
 import StartScreen from './components/StartScreen';
 import Question from './components/Question';
 import NextButton from './components/NextButton';
+import Progress from './components/Progress';
 import { useEffect, useReducer } from 'react';
 import { storeReducer, initialStore } from './reducer/storeReducer';
 
 const App = () => {
  const [store, dispatch] = useReducer(storeReducer, initialStore);
- const { status, questions, index, answers } = store;
+ const { status, questions, index, answers, points } = store;
  const currentQuestion = questions[index];
  const currentAnswer = answers[index];
+ const totalPoints = questions.reduce((acc, question) => {
+  return question.points + acc;
+ }, 0);
  const getQusetions = async () => {
   dispatch({ type: 'CHANGE_STATUS', payload: 'loading' });
   try {
@@ -57,6 +61,12 @@ const App = () => {
     )}
     {status === 'start' && (
      <>
+      <Progress
+       index={index}
+       questionsCount={questions.length}
+       points={points}
+       totalPoints={totalPoints}
+      />
       <Question
        currentQuestion={currentQuestion}
        answer={currentAnswer}
