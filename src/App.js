@@ -8,6 +8,7 @@ import Question from './components/Question';
 import NextButton from './components/NextButton';
 import Progress from './components/Progress';
 import FinishScreen from './components/FinishScreen';
+import Timer from './components/Timer';
 import { useEffect, useReducer } from 'react';
 import { storeReducer, initialStore } from './reducer/storeReducer';
 
@@ -83,12 +84,22 @@ const App = () => {
        answer={currentAnswer}
        onAnswer={handleAddAnswer}
       />
-      <NextButton
-       answer={currentAnswer}
-       onNext={handleNext}
-       index={index}
-       questionsCount={questions.length}
-      />
+      <footer>
+       <Timer
+        onTimeOut={() =>
+         dispatch({
+          type: 'CHANGE_STATUS',
+          payload: 'finished',
+         })
+        }
+       />
+       <NextButton
+        answer={currentAnswer}
+        onNext={handleNext}
+        index={index}
+        questionsCount={questions.length}
+       />
+      </footer>
      </>
     )}
     {status === 'finished' && (
