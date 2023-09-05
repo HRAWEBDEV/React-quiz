@@ -33,6 +33,12 @@ const storeReducer = (state, { type, payload }) => {
    points: payload === correctOption ? state.points + points : state.points,
   };
  }
+ if (type === 'RESET') {
+  return {
+   ...initialStore,
+   questions: state.questions,
+  };
+ }
  return state;
 };
 

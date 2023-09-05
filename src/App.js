@@ -41,6 +41,11 @@ const App = () => {
    payload: 'start',
   });
  };
+ const handleReset = () => {
+  dispatch({
+   type: 'RESET',
+  });
+ };
  const handleNext = () => {
   index + 1 === questions.length
    ? dispatch({
@@ -87,7 +92,11 @@ const App = () => {
      </>
     )}
     {status === 'finished' && (
-     <FinishScreen points={points} totalPoints={totalPoints} />
+     <FinishScreen
+      points={points}
+      totalPoints={totalPoints}
+      onReset={handleReset}
+     />
     )}
    </Main>
   </div>

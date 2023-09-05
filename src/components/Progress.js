@@ -1,7 +1,7 @@
 const Progress = ({ index, questionsCount, points, totalPoints }) => {
  return (
   <header className='progress'>
-   <progress value={index} max={questionsCount} />
+   <progress value={index + 1} max={questionsCount} />
    <p>
     question <strong>{index + 1}</strong> / {questionsCount}
    </p>
