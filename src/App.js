@@ -4,8 +4,9 @@ import Main from './components/Main';
 import Loader from './components/Loader';
 import Error from './components/Error';
 import StartScreen from './components/StartScreen';
-
+import Question from './components/Question';
 import { useEffect, useReducer } from 'react';
+
 const initialStore = {
  questions: [],
  status: 'ready',
@@ -15,7 +16,7 @@ const storeReducer = (state, { type, payload }) => {
  if (type === 'SET_DATA') {
   return {
    ...state,
-   question: payload,
+   questions: payload,
   };
  }
  if (type === 'CHANGE_STATUS') {
@@ -44,6 +45,13 @@ const App = () => {
   }
  };
 
+ const handleStart = () => {
+  dispatch({
+   type: 'CHANGE_STATUS',
+   payload: 'start',
+  });
+ };
+
  useEffect(() => {
   getQusetions();
  }, []);
@@ -54,7 +62,10 @@ const App = () => {
    <Main>
     {status === 'loading' && <Loader />}
     {status === 'error' && <Error />}
-    {status === 'ready' && <StartScreen />}
+    {status === 'ready' && (
+     <StartScreen questionsCount={questions.length} onStart={handleStart} />
+    )}
+    {status === 'start' && <Question />}
    </Main>
   </div>
  );
