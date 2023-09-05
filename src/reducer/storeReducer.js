@@ -2,6 +2,7 @@ const initialStore = {
  questions: [],
  status: 'ready',
  index: 0,
+ points: 0,
  answers: [],
 };
 
@@ -25,9 +26,11 @@ const storeReducer = (state, { type, payload }) => {
   };
  }
  if (type === 'ADD_ANSWER') {
+  const { correctOption, points } = state.questions[state.index];
   return {
    ...state,
    answers: [...state.answers, payload],
+   points: payload === correctOption ? state.points + points : state.points,
   };
  }
  return { ...state };
