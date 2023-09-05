@@ -7,6 +7,7 @@ import StartScreen from './components/StartScreen';
 import Question from './components/Question';
 import NextButton from './components/NextButton';
 import Progress from './components/Progress';
+import FinishScreen from './components/FinishScreen';
 import { useEffect, useReducer } from 'react';
 import { storeReducer, initialStore } from './reducer/storeReducer';
 
@@ -41,9 +42,14 @@ const App = () => {
   });
  };
  const handleNext = () => {
-  dispatch({
-   type: 'NEXT',
-  });
+  index + 1 === questions.length
+   ? dispatch({
+      type: 'CHANGE_STATUS',
+      payload: 'finished',
+     })
+   : dispatch({
+      type: 'NEXT',
+     });
  };
 
  useEffect(() => {
@@ -72,8 +78,16 @@ const App = () => {
        answer={currentAnswer}
        onAnswer={handleAddAnswer}
       />
-      <NextButton answer={currentAnswer} onNext={handleNext} />
+      <NextButton
+       answer={currentAnswer}
+       onNext={handleNext}
+       index={index}
+       questionsCount={questions.length}
+      />
      </>
+    )}
+    {status === 'finished' && (
+     <FinishScreen points={points} totalPoints={totalPoints} />
     )}
    </Main>
   </div>
