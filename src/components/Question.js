@@ -1,11 +1,15 @@
-const Question = ({ currentQuestion }) => {
+const Question = ({ currentQuestion, answer, onAnswer }) => {
  const { question, options } = currentQuestion;
  return (
   <div>
    <h4>{question}</h4>
    <div className='options'>
-    {options.map((option) => (
-     <button key={option} className='btn btn-option'>
+    {options.map((option, index) => (
+     <button
+      key={option}
+      className='btn btn-option'
+      onClick={() => onAnswer(index)}
+     >
       {option}
      </button>
     ))}

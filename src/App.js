@@ -10,9 +10,9 @@ import { storeReducer, initialStore } from './reducer/storeReducer';
 
 const App = () => {
  const [store, dispatch] = useReducer(storeReducer, initialStore);
- const { status, questions, index } = store;
+ const { status, questions, index, answers } = store;
  const currentQuestion = questions[index];
-
+ const currentAnswer = answers[index];
  const getQusetions = async () => {
   dispatch({ type: 'CHANGE_STATUS', payload: 'loading' });
   try {
@@ -23,6 +23,10 @@ const App = () => {
   } catch (err) {
    dispatch({ type: 'CHANGE_STATUS', payload: 'error' });
   }
+ };
+
+ const handleAddAnswer = (newAnswer) => {
+  dispatch({ type: 'ADD_ANSWER', payload: newAnswer });
  };
 
  const handleStart = () => {
@@ -45,7 +49,13 @@ const App = () => {
     {status === 'ready' && (
      <StartScreen questionsCount={questions.length} onStart={handleStart} />
     )}
-    {status === 'start' && <Question currentQuestion={currentQuestion} />}
+    {status === 'start' && (
+     <Question
+      currentQuestion={currentQuestion}
+      answer={currentAnswer}
+      onAnswer={handleAddAnswer}
+     />
+    )}
    </Main>
   </div>
  );

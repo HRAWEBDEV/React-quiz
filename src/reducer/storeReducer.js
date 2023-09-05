@@ -2,6 +2,7 @@ const initialStore = {
  questions: [],
  status: 'ready',
  index: 0,
+ answers: [],
 };
 
 const storeReducer = (state, { type, payload }) => {
@@ -23,7 +24,12 @@ const storeReducer = (state, { type, payload }) => {
    index: ++state.index,
   };
  }
-
+ if (type === 'ADD_ANSWER') {
+  return {
+   ...state,
+   answers: [...state.answers, payload],
+  };
+ }
  return { ...state };
 };
 
