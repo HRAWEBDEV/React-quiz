@@ -8,9 +8,9 @@ const Question = ({ currentQuestion, answer, onAnswer }) => {
      <button
       className={`btn btn-option ${
        answer !== undefined && index === answer ? 'answer' : ''
-      }  ${
-       answer !== undefined && index === correctOption ? 'correct' : 'wrong'
-      }`}
+      }  ${answer !== undefined && index === correctOption ? 'correct' : ''}
+      
+      ${answer !== undefined && index !== correctOption ? 'wrong' : ''}`}
       key={option}
       onClick={() => onAnswer(index)}
       disabled={answer !== undefined}
