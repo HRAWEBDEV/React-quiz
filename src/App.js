@@ -5,6 +5,7 @@ import Loader from './components/Loader';
 import Error from './components/Error';
 import StartScreen from './components/StartScreen';
 import Question from './components/Question';
+import NextButton from './components/NextButton';
 import { useEffect, useReducer } from 'react';
 import { storeReducer, initialStore } from './reducer/storeReducer';
 
@@ -35,6 +36,11 @@ const App = () => {
    payload: 'start',
   });
  };
+ const handleNext = () => {
+  dispatch({
+   type: 'NEXT',
+  });
+ };
 
  useEffect(() => {
   getQusetions();
@@ -50,11 +56,14 @@ const App = () => {
      <StartScreen questionsCount={questions.length} onStart={handleStart} />
     )}
     {status === 'start' && (
-     <Question
-      currentQuestion={currentQuestion}
-      answer={currentAnswer}
-      onAnswer={handleAddAnswer}
-     />
+     <>
+      <Question
+       currentQuestion={currentQuestion}
+       answer={currentAnswer}
+       onAnswer={handleAddAnswer}
+      />
+      <NextButton answer={currentAnswer} onNext={handleNext} />
+     </>
     )}
    </Main>
   </div>

@@ -22,7 +22,7 @@ const storeReducer = (state, { type, payload }) => {
  if (type === 'NEXT') {
   return {
    ...state,
-   index: ++state.index,
+   index: state.index + 1,
   };
  }
  if (type === 'ADD_ANSWER') {
@@ -33,7 +33,7 @@ const storeReducer = (state, { type, payload }) => {
    points: payload === correctOption ? state.points + points : state.points,
   };
  }
- return { ...state };
+ return state;
 };
 
 export { storeReducer, initialStore };
